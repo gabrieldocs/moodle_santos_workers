@@ -52,5 +52,7 @@ class GreetCommand extends Command
         }
 
         $output->writeln($text);
+        return Command::SUCCESS;
+
     }
 }

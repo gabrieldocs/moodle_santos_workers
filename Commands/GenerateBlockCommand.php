@@ -45,40 +45,31 @@ class GenerateBlockCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // // Manipulando input 
-        // if (!$output instanceof ConsoleOutputInterface) {
-        //     throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
-        // }
-        // $section1 = $output->section();
         
-        // $section1->writeln([
-        //     "<info>Santos Workers's Moodle Toolbox</>",
-        //     "<info>===============================</>",
-        //     "",
-        // ]);
-        
-        // $section1->writeln('Block name: ' . $input->getArgument('blockname'));
         // Manipulando o Filesystem
+        // $command = $this->getApplication()->find('workers:greet');
+        
+        $consoleInput = $input->getArgument('blockname');
         $filesystem = new Filesystem();
 
         try {
+            $dir = getcwd() . '/block' . '/' . $input->getArgument('blockname');
             if($filesystem->exists(getcwd() . '/block')){
                 $output->writeln('The block dir exists in path');
-                $output->writeln(getcwd() . '/block');
+                $output->writeln('<info>' . getcwd() . '/block' . '</info>');
+                $output->writeln('<comment>foo</comment>');
+                $output->writeln('<question>foo</question>');
+            } else { 
+                $filesystem->mkdir(getcwd() . '/block' . $dir);
             }
-            // $filesystem->touch('file.txt', time() + 10);
-            // $filesystem->touch('file.txt', time() + 10);
-            $dir = getcwd() . '/block' . '/' . $input->getArgument('blockname');
+
             $filesystem->mkdir($dir);
             if($filesystem->exists($dir)) { 
-                $filesystem->copy('version.php',  $dir . '/' . $input->getArgument('blockname').'.php');
-            }
-            // $filesystem->copy('version.php',  $input->getArgument('blockname').'.php');
-
+                $filesystem->copy('version.php',  $dir . '/' . $consoleInput.'.php');                
+            }            
         } catch (IOExceptionInterface $exception) {
             echo "An error occurred while creating your directory at ".$exception->getPath();
         }
-
         return Command::SUCCESS;
 
     }

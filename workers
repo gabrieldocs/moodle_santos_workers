@@ -11,4 +11,6 @@ $application = new Application();
 # add our commands
 $application->add(new GreetCommand());
 $application->add(new GenerateBlockCommand());
+$application->add(new GetFileSystem());
+
 $application->run();
